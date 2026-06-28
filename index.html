@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  SALMAN IRFAN — PORTFOLIO
+  Author      : Salman Irfan
+  Description : CS Student & Web Developer personal portfolio.
+
+  File Structure (company standard — separation of concerns):
+    index.html  — Markup / structure only (this file)
+    styles.css  — All presentation / visual styles
+    script.js   — All behaviour / interactivity
+    images/     — Profile photos (photo1–4)
+    certs/      — Certificate images + PDFs
+  ============================================================
+-->
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salman Irfan — CS Student &amp; Web Developer</title>
+
+  <!-- Google Fonts — loaded before stylesheet to avoid FOUT -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- External stylesheet (all visual styles) -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ========================================================
+       NAVIGATION
+       Fixed top bar with brand logo, page links, and a mobile
+       hamburger toggle. The .scrolled class is added via JS.
+       ======================================================== -->
+  <nav id="nav">
+    <a href="#" class="nav-brand">SI<span>.</span></a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#certificates">Certificates</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+
+    <!-- Hamburger — visible on mobile only (CSS: display:none above 768px) -->
+    <div class="hamburger" id="ham" onclick="toggleNav()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
+
+
+  <!-- ========================================================
+       LIGHTBOX MODAL
+       Hidden by default; shown when a certificate card is
+       clicked. Clicking the backdrop or ✕ closes it.
+       ======================================================== -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img id="lightboxImg" src="" alt="Certificate — full size view" />
+  </div>
+
+
+  <!-- ========================================================
+       HERO SECTION
+       Full-viewport intro with name, role, CTAs, stats,
+       and a profile photo with floating badges.
+       ======================================================== -->
+  <section class="hero">
+
+    <!-- Left column: text content -->
+    <div class="hero-left">
+
+      <!-- Availability status badge -->
+      <div class="hero-badge">Available for opportunities</div>
+
+      <!-- Primary heading -->
+      <h1 class="hero-name">
+        Salman<br />
+        <span class="hl">Irfan</span>
+      </h1>
+
+      <!-- Role / tagline -->
+      <p class="hero-role">
+        <strong>CS Student</strong> at Lahore Garrison University &amp;
+        <strong>Web Dev Intern</strong> at GAO Tek Inc.<br />
+        Building digital experiences, creating content, and growing every day.
+      </p>
+
+      <!-- Call-to-action buttons -->
+      <div class="hero-actions">
+        <a href="#contact"      class="btn btn-primary">Get in touch ↗</a>
+        <a href="#certificates" class="btn btn-ghost">View certificates</a>
+      </div>
+
+      <!-- Key stats row -->
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">2+</div>
+          <div class="stat-label">Internships</div>
+        </div>
+        <div>
+          <div class="stat-num">6</div>
+          <div class="stat-label">Certificates</div>
+        </div>
+        <div>
+          <div class="stat-num">2020</div>
+          <div class="stat-label">Creating since</div>
+        </div>
+        <div>
+          <div class="stat-num">13+</div>
+          <div class="stat-label">Skills</div>
+        </div>
+      </div>
+    </div>
+    <!-- /hero-left -->
+
+    <!-- Right column: profile photo + gallery -->
+    <div class="hero-right">
+      <div class="profile-wrap">
+
+        <!--
+          Main profile photo.
+          Default = photo1.jpg. Clicking a thumbnail swaps this src via JS.
+        -->
+        <img
+          class="profile-img"
+          id="mainPhoto"
+          src="images/photo1.jpg"
+          alt="Salman Irfan — profile photo"
+        />
+
+        <!-- Decorative blue glow under photo -->
+        <div class="profile-glow" aria-hidden="true"></div>
+
+        <!-- Floating award badge (bottom-left) -->
+        <div class="profile-badge-award" aria-label="Best Intern of the Month award">
+          <div class="pb-icon" aria-hidden="true">🏆</div>
+          <div>
+            <div class="pb-title">Best Intern of the Month</div>
+            <div class="pb-sub">GAO Tek Inc. · Oct 2025</div>
+          </div>
+        </div>
+
+        <!-- Floating university badge (top-right) -->
+        <div class="profile-badge-uni" aria-label="Lahore Garrison University">
+          🎓 Lahore Garrison University
+        </div>
+
+        <!--
+          Thumbnail gallery strip.
+          Clicking a thumb swaps mainPhoto.src via JS (initGallery in script.js).
+          The first thumb matches the default mainPhoto src.
+        -->
+        <div class="gallery-strip" role="group" aria-label="Photo gallery thumbnails">
+          <img class="gallery-thumb active" src="images/photo1.jpg" alt="Salman — photo 1" />
+          <img class="gallery-thumb"        src="images/photo2.jpg" alt="Salman — photo 2" />
+          <img class="gallery-thumb"        src="images/photo3.webp" alt="Salman — photo 3" />
+          <img class="gallery-thumb"        src="images/photo4.jpg" alt="Salman — photo 4" />
+        </div>
+
+      </div>
+      <!-- /profile-wrap -->
+    </div>
+    <!-- /hero-right -->
+
+  </section>
+  <!-- /hero -->
+
+
+  <!-- ========================================================
+       ABOUT SECTION
+       Bio paragraphs (left) + highlight cards (right).
+       ======================================================== -->
+  <section class="section" id="about">
+    <div class="section-tag reveal">About me</div>
+    <h2 class="section-title reveal">
+      CS student. Developer.<br />Creator. Explorer.
+    </h2>
+
+    <div class="about-grid">
+
+      <!-- Left: bio text -->
+      <div class="about-body reveal">
+        <p>
+          I'm <strong>Salman Irfan</strong>, a Computer Science undergraduate at
+          <strong>Lahore Garrison University</strong> with a deep passion for web
+          development, digital content, and technology. I believe in learning by
+          doing — every project, internship, and piece of content I create teaches
+          me something new.
+        </p>
+        <p>
+          Through my internship at <strong>GAO Tek Inc.</strong>, I gained
+          international collaboration experience working alongside professionals
+          from different countries. My performance earned me the prestigious
+          <strong>Best Intern of the Month Award</strong> — one of my proudest
+          achievements.
+        </p>
+        <p>
+          I interned at <strong>ISPR</strong>, gaining professional workplace
+          experience and developing discipline, teamwork, and organisational
+          skills in a high-standard environment.
+        </p>
+        <p>
+          Beyond code, I'm a content creator who started making gaming videos in
+          2020, runs an Instagram page focused on football and trending topics, and
+          publishes articles on <strong>Medium</strong>. I also hold certifications
+          from <strong>Google</strong> and <strong>Coursera</strong> in Git &amp;
+          GitHub and SEO Tools. Music and singing are creative outlets I'm
+          passionate about too.
+        </p>
+      </div>
+
+      <!-- Right: highlight cards -->
+      <div class="hcards reveal rd1">
+        <div class="hcard">
+          <div class="hcard-icon">🌍</div>
+          <div>
+            <div class="hcard-title">International Experience</div>
+            <div class="hcard-desc">Collaborated with professionals from multiple countries at GAO Tek Inc.</div>
+          </div>
+        </div>
+        <div class="hcard">
+          <div class="hcard-icon">🏆</div>
+          <div>
+            <div class="hcard-title">Best Intern of the Month</div>
+            <div class="hcard-desc">Awarded at GAO Tek Inc. for outstanding performance — Oct 2025.</div>
+          </div>
+        </div>
+        <div class="hcard">
+          <div class="hcard-icon">✍️</div>
+          <div>
+            <div class="hcard-title">Published on Medium</div>
+            <div class="hcard-desc">Multiple articles on tech, development, and personal growth.</div>
+          </div>
+        </div>
+        <div class="hcard">
+          <div class="hcard-icon">🎮</div>
+          <div>
+            <div class="hcard-title">Content Creator since 2020</div>
+            <div class="hcard-desc">Gaming videos, Instagram reels, social media management.</div>
+          </div>
+        </div>
+        <div class="hcard">
+          <div class="hcard-icon">📜</div>
+          <div>
+            <div class="hcard-title">Google &amp; Coursera Certified</div>
+            <div class="hcard-desc">Git &amp; GitHub (Google) and Boost SEO Tools certifications.</div>
+          </div>
+        </div>
+      </div>
+      <!-- /hcards -->
+
+    </div>
+    <!-- /about-grid -->
+  </section>
+  <!-- /about -->
+
+
+  <!-- ========================================================
+       SKILLS SECTION
+       #skillsGrid is populated dynamically by script.js.
+       ======================================================== -->
+  <section class="section skills-bg" id="skills">
+    <div class="section-tag reveal">What I know</div>
+    <h2 class="section-title reveal">Skills &amp; Technologies</h2>
+    <p class="section-sub reveal">
+      A blend of technical and soft skills built through academics,
+      internships, and independent projects.
+    </p>
+    <!-- Cards injected here by buildSkillsGrid() in script.js -->
+    <div class="skills-grid" id="skillsGrid"></div>
+  </section>
+  <!-- /skills -->
+
+
+  <!-- ========================================================
+       EXPERIENCE SECTION
+       Vertical timeline of roles.
+       ======================================================== -->
+  <section class="section" id="experience">
+    <div class="section-tag reveal">Where I've worked</div>
+    <h2 class="section-title reveal">Experience</h2>
+
+    <div class="exp-timeline reveal">
+
+      <!-- Role 1: GAO Tek -->
+      <div class="exp-item">
+        <div class="exp-period">2025 · 4-Month Internship</div>
+        <div class="exp-title">Web Development Intern</div>
+        <div class="exp-company">GAO Tek Inc. · International (Remote) · gaotek.com</div>
+        <ul class="exp-duties">
+          <li>Worked on web development tasks and projects in a professional international environment</li>
+          <li>Collaborated with team members from different countries, strengthening cross-cultural communication</li>
+          <li>Improved technical, communication, and teamwork skills through real-world deliverables</li>
+          <li>Completed a 4-month program with certificates in both Web Development and Digital Marketing</li>
+        </ul>
+        <div class="exp-award">🏆 Best Intern of the Month — October 2025</div>
+      </div>
+
+      <!-- Role 2: ISPR -->
+      <div class="exp-item">
+        <div class="exp-period">Previous</div>
+        <div class="exp-title">Intern</div>
+        <div class="exp-company">ISPR · Pakistan</div>
+        <ul class="exp-duties">
+          <li>Gained hands-on professional workplace experience in a structured, high-standard institution</li>
+          <li>Developed strong organisational and communication skills</li>
+          <li>Learned the importance of discipline, teamwork, and professional conduct</li>
+        </ul>
+      </div>
+
+      <!-- Role 3: Content Creator -->
+      <div class="exp-item">
+        <div class="exp-period">2020 – Present</div>
+        <div class="exp-title">Content Creator &amp; Social Media Manager</div>
+        <div class="exp-company">Self-employed · Gaming, Football &amp; Technology</div>
+        <ul class="exp-duties">
+          <li>Started creating gaming content in 2020, building video production and audience engagement skills</li>
+          <li>Manage an Instagram page publishing reels around football and trending topics</li>
+          <li>Published multiple articles on Medium covering technology, insights, and personal learnings</li>
+          <li>Developed content strategy, digital marketing, and creative storytelling expertise</li>
+        </ul>
+      </div>
+
+    </div>
+    <!-- /exp-timeline -->
+  </section>
+  <!-- /experience -->
+
+
+  <!-- ========================================================
+       CERTIFICATES SECTION
+       All 6 certificates. JPG certs open in the lightbox;
+       PDF certs (Coursera) open in a new tab.
+       ======================================================== -->
+  <section class="section certs-bg" id="certificates">
+    <div class="section-tag reveal">Verified credentials</div>
+    <h2 class="section-title reveal">Certificates</h2>
+    <p class="section-sub reveal">Click any certificate to view it in full size.</p>
+
+    <div class="certs-grid reveal">
+
+      <!-- ── Certificate 1: GAO Tek — Web Development ── -->
+      <div
+        class="cert-card"
+        onclick="openLightbox('certs/cert-webdev.jpg')"
+        role="button"
+        aria-label="View Web Development certificate"
+        tabindex="0"
+      >
+        <img
+          class="cert-img"
+          src="certs/cert-webdev.jpg"
+          alt="GAO Tek — Certificate of Training in Web Development"
+        />
+        <div class="cert-body">
+          <div class="cert-issuer">GAO Tek Inc.</div>
+          <div class="cert-title">Certificate of Training in Web Development</div>
+          <div class="cert-date">Issued: December 4, 2025 · ID: GAO-IRFAN-SAL-20250714-BRY</div>
+        </div>
+      </div>
+
+      <!-- ── Certificate 2: GAO Tek — Digital Marketing ── -->
+      <div
+        class="cert-card"
+        onclick="openLightbox('certs/cert-digitalmarketing.jpg')"
+        role="button"
+        aria-label="View Digital Marketing certificate"
+        tabindex="0"
+      >
+        <img
+          class="cert-img"
+          src="certs/cert-digitalmarketing.jpg"
+          alt="GAO Tek — Certificate of Training in Digital Marketing"
+        />
+        <div class="cert-body">
+          <div class="cert-issuer">GAO Tek Inc.</div>
+          <div class="cert-title">Certificate of Training in Digital Marketing</div>
+          <div class="cert-date">Issued: December 4, 2025 · ID: GAO-IRFAN-SAL-20250714-BRY</div>
+        </div>
+      </div>
+
+      <!-- ── Certificate 3: GAO Tek — Certificate of Completion (Internship) ── -->
+      <div
+        class="cert-card"
+        onclick="openLightbox('certs/cert-internship.jpg')"
+        role="button"
+        aria-label="View Certificate of Completion"
+        tabindex="0"
+      >
+        <img
+          class="cert-img"
+          src="certs/cert-internship.jpg"
+          alt="GAO Tek — Certificate of Completion"
+        />
+        <div class="cert-body">
+          <div class="cert-issuer">GAO Tek Inc.</div>
+          <div class="cert-title">Certificate of Completion — Internship Program</div>
+          <div class="cert-date">Issued: December 4, 2025 · ID: GAO-IRFAN-SAL-20250714-BRY</div>
+        </div>
+      </div>
+
+      <!-- ── Certificate 4: Best Intern of the Month Award ── -->
+      <div
+        class="cert-card"
+        onclick="openLightbox('certs/cert-bestintern.jpg')"
+        role="button"
+        aria-label="View Best Intern of the Month award"
+        tabindex="0"
+      >
+        <img
+          class="cert-img"
+          src="certs/cert-bestintern.jpg"
+          alt="GAO Tek — Certificate of Achievement: Best Intern of the Month"
+        />
+        <div class="cert-body">
+          <div class="cert-issuer">GAO Tek Inc.</div>
+          <div class="cert-title">Certificate of Achievement — Best Intern of the Month</div>
+          <div class="cert-date">Issued: October 8, 2025 · ID: GAO-IRFAN-20250714</div>
+        </div>
+      </div>
+
+      <!-- ── Certificate 5: Coursera — Introduction to Git and GitHub (Google) ── -->
+      <!--
+        PDF certificate — clicking opens the PDF in a new tab instead of
+        the image lightbox (handled by the onclick below, not openLightbox).
+      -->
+      <div
+        class="cert-card"
+        onclick="window.open('certs/cert-git.pdf','_blank')"
+        role="button"
+        aria-label="View Git and GitHub certificate (PDF)"
+        tabindex="0"
+      >
+        <!-- Decorative PDF preview banner shown in place of an image -->
+        <div class="cert-img cert-pdf-banner" aria-hidden="true">
+          <div class="cert-pdf-inner">
+            <div class="cert-pdf-icon">📄</div>
+            <div class="cert-pdf-label">Click to open PDF</div>
+          </div>
+        </div>
+        <div class="cert-body">
+          <div class="cert-issuer">Google · Coursera</div>
+          <div class="cert-title">Introduction to Git and GitHub</div>
+          <div class="cert-date">
+            Completed: June 20, 2026 ·
+            <a
+              class="cert-verify"
+              href="https://coursera.org/verify/T6Z5OWJCGC15"
+              target="_blank"
+              rel="noopener noreferrer"
+              onclick="event.stopPropagation()"
+            >Verify ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Certificate 6: Coursera — Boost SEO Tools ── -->
+      <div
+        class="cert-card"
+        onclick="window.open('certs/cert-seo.pdf','_blank')"
+        role="button"
+        aria-label="View Boost SEO Tools certificate (PDF)"
+        tabindex="0"
+      >
+        <div class="cert-img cert-pdf-banner" aria-hidden="true">
+          <div class="cert-pdf-inner">
+            <div class="cert-pdf-icon">📄</div>
+            <div class="cert-pdf-label">Click to open PDF</div>
+          </div>
+        </div>
+        <div class="cert-body">
+          <div class="cert-issuer">LearningMate · Coursera</div>
+          <div class="cert-title">Boost SEO Tools</div>
+          <div class="cert-date">
+            Completed: June 21, 2026 ·
+            <a
+              class="cert-verify"
+              href="https://coursera.org/verify/N5XVB998IP30"
+              target="_blank"
+              rel="noopener noreferrer"
+              onclick="event.stopPropagation()"
+            >Verify ↗</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /certs-grid -->
+  </section>
+  <!-- /certificates -->
+
+
+  <!-- ========================================================
+       ACHIEVEMENTS SECTION
+       Cards injected dynamically by buildAchievementsGrid()
+       in script.js.
+       ======================================================== -->
+  <section class="section" id="achievements">
+    <div class="section-tag reveal">What I've earned</div>
+    <h2 class="section-title reveal">Achievements</h2>
+    <p class="section-sub reveal">
+      Milestones, awards, and recognitions collected along the journey.
+    </p>
+    <!-- Cards injected here by buildAchievementsGrid() in script.js -->
+    <div class="ach-grid" id="achGrid"></div>
+  </section>
+  <!-- /achievements -->
+
+
+  <!-- ========================================================
+       INTERESTS SECTION
+       Pills injected dynamically by buildInterestsPills()
+       in script.js.
+       ======================================================== -->
+  <section class="section skills-bg" id="interests">
+    <div class="section-tag reveal">What I love</div>
+    <h2 class="section-title reveal">Interests &amp; Hobbies</h2>
+    <p class="section-sub reveal">
+      The things that fuel my creativity and keep me inspired outside of work.
+    </p>
+    <!-- Pills injected here by buildInterestsPills() in script.js -->
+    <div class="interests-wrap" id="interestsWrap"></div>
+  </section>
+  <!-- /interests -->
+
+
+  <!-- ========================================================
+       CONTACT SECTION
+       Left: short message. Right: social profile links.
+       ======================================================== -->
+  <section class="section contact-bg" id="contact">
+    <div class="section-tag reveal">Get in touch</div>
+    <h2 class="section-title reveal">Let's connect</h2>
+
+    <div class="contact-inner">
+
+      <!-- Left: intro text -->
+      <div class="contact-text reveal">
+        <p>
+          I'm currently open to internship opportunities, freelance projects,
+          and collaborations. Whether you want to work together, discuss tech,
+          or just say hi — my inbox is always open.
+        </p>
+        <p>
+          Reach me through any of the platforms on the right, or connect
+          directly on LinkedIn for professional enquiries.
+        </p>
+        <a href="mailto:salmanirfan@example.com" class="btn btn-primary">
+          Send an email ↗
+        </a>
+      </div>
+
+      <!-- Right: social profile links -->
+      <div class="social-links reveal rd1">
+
+        <a
+          href="https://linkedin.com/in/salmanirfan"
+          class="social-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn profile"
+        >
+          <div class="si si-li">in</div>
+          <div>
+            <div class="sl-name">LinkedIn</div>
+            <div class="sl-handle">linkedin.com/in/salmanirfan</div>
+          </div>
+          <span class="sl-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a
+          href="https://github.com/salmanirfan"
+          class="social-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub profile"
+        >
+          <div class="si si-gh">gh</div>
+          <div>
+            <div class="sl-name">GitHub</div>
+            <div class="sl-handle">github.com/salmanirfan</div>
+          </div>
+          <span class="sl-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a
+          href="https://medium.com/@salmanirfan"
+          class="social-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Medium profile"
+        >
+          <div class="si si-md">M</div>
+          <div>
+            <div class="sl-name">Medium</div>
+            <div class="sl-handle">medium.com/@salmanirfan</div>
+          </div>
+          <span class="sl-arrow" aria-hidden="true">↗</span>
+        </a>
+
+        <a
+          href="https://instagram.com/salmanirfan"
+          class="social-link"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram profile"
+        >
+          <div class="si si-ig">ig</div>
+          <div>
+            <div class="sl-name">Instagram</div>
+            <div class="sl-handle">@salmanirfan</div>
+          </div>
+          <span class="sl-arrow" aria-hidden="true">↗</span>
+        </a>
+
+      </div>
+      <!-- /social-links -->
+
+    </div>
+    <!-- /contact-inner -->
+  </section>
+  <!-- /contact -->
+
+
+  <!-- ========================================================
+       FOOTER
+       ======================================================== -->
+  <footer>
+    <span>© 2025 <a href="#">Salman Irfan</a>. All rights reserved.</span>
+    <span>Built with HTML, CSS &amp; JavaScript.</span>
+  </footer>
+
+
+  <!-- ========================================================
+       EXTERNAL JAVASCRIPT
+       Loaded at the end of <body> so all DOM elements exist
+       before the script runs (no need for extra load events).
+       ======================================================== -->
+  <script src="script.js"></script>
+
+</body>
+</html>
